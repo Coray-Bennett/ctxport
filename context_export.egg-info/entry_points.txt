@@ -1,0 +1,2 @@
+[console_scripts]
+context-export = code_context_export:main
