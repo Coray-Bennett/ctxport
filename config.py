@@ -14,8 +14,11 @@ import os
 @dataclass
 class Config:
     """Configuration for Code Context Exporter"""
-    # Language mappings for syntax highlighting
+    # Language mappings for syntax highlighting by extension
     language_map: Dict[str, str] = field(default_factory=dict)
+    
+    # Language mappings for specific filenames
+    filename_map: Dict[str, str] = field(default_factory=dict)
     
     # Extensions considered as text files
     text_extensions: Set[str] = field(default_factory=set)
@@ -29,6 +32,9 @@ class Config:
         
         # Merge language map
         merged.language_map = {**self.language_map, **other.language_map}
+        
+        # Merge filename map
+        merged.filename_map = {**self.filename_map, **other.filename_map}
         
         # Merge text extensions
         merged.text_extensions = self.text_extensions | other.text_extensions
@@ -92,10 +98,24 @@ class ConfigManager:
                 '.m': 'matlab',
                 '.jl': 'julia',
                 '.tex': 'latex',
-                '.dockerfile': 'dockerfile',
                 '.xml': 'xml',
                 '.vue': 'vue',
                 '.svelte': 'svelte',
+            },
+            filename_map={
+                'dockerfile': 'dockerfile',
+                'makefile': 'makefile',
+                'gnumakefile': 'makefile',
+                'rakefile': 'ruby',
+                'gemfile': 'ruby',
+                'vagrantfile': 'ruby',
+                'jenkinsfile': 'groovy',
+                'fastfile': 'ruby',
+                'procfile': 'yaml',
+                'podfile': 'ruby',
+                'cakefile': 'coffeescript',
+                'gulpfile': 'javascript',
+                'gruntfile': 'javascript',
             },
             text_extensions={
                 '.txt', '.md', '.yml', '.yaml', '.json', '.xml', '.html', '.css',
@@ -145,6 +165,10 @@ class ConfigManager:
             # Load language map
             if 'language_map' in data and isinstance(data['language_map'], dict):
                 config.language_map = data['language_map']
+            
+            # Load filename map
+            if 'filename_map' in data and isinstance(data['filename_map'], dict):
+                config.filename_map = data['filename_map']
             
             # Load text extensions
             if 'text_extensions' in data and isinstance(data['text_extensions'], list):
@@ -197,7 +221,12 @@ class ConfigManager:
             "language_map": {
                 ".custom": "custom-language",
                 ".myext": "mylang",
-                "# Add more mappings here": "..."
+                "# Add more extension mappings here": "..."
+            },
+            "filename_map": {
+                "customfile": "custom-language",
+                "configfile": "yaml",
+                "# Add more filename mappings here": "..."
             },
             "text_extensions": [
                 ".custom",

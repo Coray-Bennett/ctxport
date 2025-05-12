@@ -72,6 +72,11 @@ Configuration files use JSON format:
     ".custom": "custom-language",
     ".myext": "mylang"
   },
+  "filename_map": {
+    "makefile": "makefile",
+    "dockerfile": "dockerfile",
+    "jenkinsfile": "groovy"
+  },
   "text_extensions": [
     ".custom",
     ".myext",
@@ -91,14 +96,20 @@ Configuration files use JSON format:
    - Key: file extension (including the dot)
    - Value: language identifier for markdown code blocks
 
-2. **text_extensions**: Set of file extensions to treat as text files
+2. **filename_map**: Maps specific filenames to language identifiers
+   - Key: filename (case-insensitive)
+   - Value: language identifier for markdown code blocks
+   - Useful for files without extensions (Makefile, Dockerfile, etc.)
+
+3. **text_extensions**: Set of file extensions to treat as text files
    - List of extensions (including the dot)
    - Files with these extensions will be included in the export
 
-3. **ignore_patterns**: Patterns for files and directories to exclude
+4. **ignore_patterns**: Patterns for files and directories to exclude
    - Supports glob patterns
    - Directory patterns should end with `/`
 
+new_str
 ### Example Configurations
 
 Create a project-specific configuration:
@@ -108,6 +119,12 @@ echo '{
   "language_map": {
     ".prisma": "prisma",
     ".graphql": "graphql"
+  },
+  "filename_map": {
+    "dockerfile.dev": "dockerfile",
+    "dockerfile.prod": "dockerfile",
+    "jenkinsfile": "groovy",
+    "fastfile": "ruby"
   },
   "text_extensions": [
     ".prisma",
