@@ -1,26 +1,26 @@
 from setuptools import setup
 
 setup(
-    name='context-export',
-    version='1.0.0',
+    name='ctxport',
+    version='0.1.0',
     py_modules=['code_context_export'],
     entry_points={
         'console_scripts': [
-            'context-export=code_context_export:main',
+            'ctxport=code_context_export:main',
         ],
     },
     install_requires=[],
     python_requires='>=3.6',
-    author='Your Name',
-    author_email='your.email@example.com',
+    author='Coray Bennett',
+    author_email='cob3218@rit.edu',
     description='Export codebase context to markdown for AI prompts',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/yourusername/context-export',
+    url='https://github.com/Coray-Bennett/ctxport',
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
+        'Environment :: Console',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
