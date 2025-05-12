@@ -28,13 +28,14 @@ class CodeExporter:
         self.config = self.config_manager.get_config_for_directory(self.directory)
     
     def get_language(self, file_path: Path) -> str:
-        """Determine the language for syntax highlighting based on file extension."""
-        ext = file_path.suffix.lower()
+        """Determine the language for syntax highlighting based on filename or extension."""
+        # First check filename mapping
+        filename = file_path.name.lower()
+        if filename in self.config.filename_map:
+            return self.config.filename_map[filename]
         
-        # Special cases
-        if file_path.name.lower() == 'dockerfile':
-            return 'dockerfile'
-        
+        # Then check extension mapping
+        ext = file_path.suffix.lower() 
         return self.config.language_map.get(ext, '')
     
     def should_ignore(self, file_path: Path) -> bool:
@@ -89,6 +90,11 @@ class CodeExporter:
             
             # Check against configured text extensions
             if file_path.suffix.lower() in self.config.text_extensions:
+                return True
+            
+            # Check if it's a known filename without extension
+            filename = file_path.name.lower()
+            if filename in self.config.filename_map:
                 return True
             
             # Try to read the file as text
