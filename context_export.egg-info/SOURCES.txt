@@ -1,8 +1,0 @@
-README.md
-code_context_export.py
-setup.py
-context_export.egg-info/PKG-INFO
-context_export.egg-info/SOURCES.txt
-context_export.egg-info/dependency_links.txt
-context_export.egg-info/entry_points.txt
-context_export.egg-info/top_level.txt

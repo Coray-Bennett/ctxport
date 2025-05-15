@@ -1,2 +1,0 @@
-[console_scripts]
-ctxport = code_context_export:main
