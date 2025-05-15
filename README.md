@@ -38,6 +38,11 @@ ctxport -o context.md
 ctxport -v
 ```
 
+### Debug mode:
+```bash
+ctxport --debug
+```
+
 ### Initialize configuration:
 ```bash
 # Create a local config file in current directory
@@ -86,7 +91,8 @@ Configuration files use JSON format:
     "*.log",
     "temp/",
     "*.tmp"
-  ]
+  ],
+  "default_language": "text"
 }
 ```
 
@@ -109,35 +115,18 @@ Configuration files use JSON format:
    - Supports glob patterns
    - Directory patterns should end with `/`
 
-new_str
+5. **default_language**: Default language to use when no mapping is found
+   - Empty string results in no syntax highlighting
+
 ### Example Configurations
 
 Create a project-specific configuration:
 
 ```bash
-echo '{
-  "language_map": {
-    ".prisma": "prisma",
-    ".graphql": "graphql"
-  },
-  "filename_map": {
-    "dockerfile.dev": "dockerfile",
-    "dockerfile.prod": "dockerfile",
-    "jenkinsfile": "groovy",
-    "fastfile": "ruby"
-  },
-  "text_extensions": [
-    ".prisma",
-    ".graphql",
-    ".env.example"
-  ],
-  "ignore_patterns": [
-    "node_modules/",
-    "dist/",
-    "*.min.js"
-  ]
-}' > .ctxport.json
+ctxport --init-config
 ```
+
+This will create a `.ctxport.json` file in the current directory with example settings.
 
 ### Backward Compatibility
 
