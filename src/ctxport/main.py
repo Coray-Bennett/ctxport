@@ -1,5 +1,5 @@
 """
-Entry point for Code Context Exporter
+Entry point
 """
 
 import argparse
@@ -12,8 +12,6 @@ from ctxport.config import ConfigManager
 from ctxport.core import CodeExporter, ClipboardManager
 from ctxport.utils.path_utils import normalize_path
 
-
-# Configure logging
 logging.basicConfig(
     level=logging.WARNING,
     format='%(levelname)s: %(message)s'
@@ -141,20 +139,16 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser = create_parser()
     args = parser.parse_args(argv)
     
-    # Configure logging level
     if args.debug:
         logger.setLevel(logging.DEBUG)
     elif args.verbose:
         logger.setLevel(logging.INFO)
     
-    # Initialize the configuration manager
     config_manager = ConfigManager()
     
-    # Handle configuration initialization commands
     if handle_config_initialization(args, config_manager):
         return 0
     
-    # Get the directory to export
     try:
         root_dir = normalize_path(args.directory)
         if not root_dir.exists():
@@ -167,18 +161,15 @@ def main(argv: Optional[List[str]] = None) -> int:
         logger.error(f"Invalid directory: {e}")
         return 1
     
-    # Initialize exporter
     exporter = CodeExporter(config_manager)
     exporter.set_directory(root_dir)
     
-    # Export the directory
     try:
         output_content, file_count = exporter.export_directory(args.verbose)
     except Exception as e:
         logger.error(f"Export failed: {e}")
         return 1
     
-    # Output the results
     if args.output:
         output_path = Path(args.output)
         if write_to_file(output_path, output_content):
@@ -186,7 +177,6 @@ def main(argv: Optional[List[str]] = None) -> int:
         else:
             return 1
     else:
-        # Try to copy to clipboard
         clipboard = ClipboardManager()
         if clipboard.copy_to_clipboard(output_content):
             print(f"Successfully copied {file_count} files to clipboard")

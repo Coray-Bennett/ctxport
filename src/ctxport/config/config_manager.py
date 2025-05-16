@@ -1,5 +1,5 @@
 """
-Configuration management system for Code Context Exporter
+Configuration management
 """
 
 import json
@@ -8,12 +8,9 @@ import sys
 import logging
 from pathlib import Path
 from typing import Dict, Optional, List
-import shutil
 from ctxport.config.config import Config
 
-
 logger = logging.getLogger(__name__)
-
 
 class ConfigManager:
     """Manage configuration loading and merging"""
@@ -37,7 +34,6 @@ class ConfigManager:
             Path.home() / f'.{self.GLOBAL_CONFIG_NAME}'
         ]
         
-        # Try XDG_CONFIG_HOME first if available
         xdg_config = os.environ.get('XDG_CONFIG_HOME')
         if xdg_config:
             config_locations.insert(0, Path(xdg_config) / 'ctxport' / self.GLOBAL_CONFIG_NAME)
@@ -51,7 +47,6 @@ class ConfigManager:
                 except Exception as e:
                     logger.warning(f"Failed to load global config from {config_path}: {e}")
         
-        # No global config found, use empty Config
         self._global_config = Config()
         return self._global_config
     
@@ -63,36 +58,29 @@ class ConfigManager:
             
             config = Config()
             
-            # Load language map
             if 'language_map' in data and isinstance(data['language_map'], dict):
-                # Filter out comment keys (keys starting with '#')
                 config.language_map = {
                     k: v for k, v in data['language_map'].items() 
                     if not k.startswith('#')
                 }
             
-            # Load filename map
             if 'filename_map' in data and isinstance(data['filename_map'], dict):
-                # Filter out comment keys
                 config.filename_map = {
                     k: v for k, v in data['filename_map'].items() 
                     if not k.startswith('#')
                 }
             
-            # Load text extensions
             if 'text_extensions' in data and isinstance(data['text_extensions'], list):
                 config.text_extensions = set(
                     ext for ext in data['text_extensions'] if not ext.startswith('#')
                 )
             
-            # Load ignore patterns
             if 'ignore_patterns' in data and isinstance(data['ignore_patterns'], list):
                 config.ignore_patterns = [
                     pattern for pattern in data['ignore_patterns'] 
                     if not pattern.startswith('#')
                 ]
             
-            # Load default language
             if 'default_language' in data and isinstance(data['default_language'], str):
                 config.default_language = data['default_language']
             
@@ -127,14 +115,10 @@ class ConfigManager:
         if directory in self._cached_configs:
             return self._cached_configs[directory]
         
-        # Start with default config
         merged_config = Config.get_default_config()
-        
-        # Merge with global config
         global_config = self._load_global_config()
         merged_config = merged_config.merge(global_config)
         
-        # Look for directory-specific configs, starting from root and going down
         config_files = []
         current = directory
         try:
@@ -143,15 +127,13 @@ class ConfigManager:
                 if config_file.exists():
                     config_files.append(config_file)
                 current = current.parent
-        except RuntimeError:  # Handle potential infinite recursion on some systems
+        except RuntimeError:
             logger.warning(f"Path traversal terminated early for {directory}")
         
-        # Apply configs from root to specific directory
         for config_file in reversed(config_files):
             dir_config = self._load_config_file(config_file)
             merged_config = merged_config.merge(dir_config)
         
-        # Load legacy ignore patterns (for backwards compatibility)
         legacy_patterns = self._load_legacy_ignore_file(directory)
         if legacy_patterns:
             legacy_config = Config(ignore_patterns=legacy_patterns)
@@ -205,7 +187,6 @@ class ConfigManager:
         }
         
         try:
-            # Ensure parent directory exists
             path.parent.mkdir(parents=True, exist_ok=True)
             
             with open(path, 'w', encoding='utf-8') as f:

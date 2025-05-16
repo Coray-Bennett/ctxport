@@ -1,11 +1,10 @@
 """
-File filtering functionality for Code Context Exporter
+File filtering functionality
 """
 
 import fnmatch
 import logging
 from pathlib import Path
-from typing import List, Set
 
 from ctxport.config import Config
 from ctxport.utils.mime_utils import is_text_file

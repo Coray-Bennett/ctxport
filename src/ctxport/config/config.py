@@ -1,5 +1,5 @@
 """
-Configuration data structure for Code Context Exporter
+Configuration dataclass
 """
 
 from dataclasses import dataclass, field
@@ -30,7 +30,6 @@ class Config:
     @classmethod
     def get_default_config(cls) -> 'Config':
         """Get the default configuration"""
-        # Only create the default config once
         if cls.DEFAULT_CONFIG is None:
             cls.DEFAULT_CONFIG = Config(
                 language_map={
@@ -120,20 +119,15 @@ class Config:
         """Merge another config into this one, with other's values taking precedence"""
         merged = Config()
         
-        # Merge language map
         merged.language_map = {**self.language_map, **other.language_map}
         
-        # Merge filename map
         merged.filename_map = {**self.filename_map, **other.filename_map}
         
-        # Merge text extensions
         merged.text_extensions = self.text_extensions | other.text_extensions
         
         # Merge ignore patterns (preserve order and remove duplicates)
-        # Using dict.fromkeys to preserve order while removing duplicates
         merged.ignore_patterns = list(dict.fromkeys(self.ignore_patterns + other.ignore_patterns))
         
-        # Take the non-empty default language or fallback to empty string
         merged.default_language = other.default_language or self.default_language
         
         return merged

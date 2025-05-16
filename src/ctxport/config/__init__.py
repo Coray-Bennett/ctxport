@@ -1,5 +1,5 @@
 """
-Configuration system for Code Context Exporter
+Configuration system
 """
 
 from ctxport.config.config import Config

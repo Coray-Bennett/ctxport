@@ -1,5 +1,5 @@
 """
-Output formatters for Code Context Exporter
+Output formatters
 """
 
 from ctxport.formatters.base import OutputFormatter

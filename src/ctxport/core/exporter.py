@@ -1,10 +1,10 @@
 """
-Main exporter functionality for Code Context Exporter
+Main exporter functionality
 """
 
 import logging
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Optional, Tuple
 
 from ctxport.config import Config, ConfigManager
 from ctxport.core.file_filter import FileFilter
@@ -65,12 +65,10 @@ class CodeExporter:
         if not self.directory or not self.config:
             raise RuntimeError("Working directory not set. Call set_directory() first.")
             
-        # Begin the export with the project name
         self.formatter.begin_document(self.directory.name)
         file_count = 0
         
         try:
-            # Get all files in the directory, sorted by path
             for file_path in sorted(find_files(self.directory)):
                 if not self.file_filter.should_include_file(file_path):
                     continue
@@ -83,10 +81,8 @@ class CodeExporter:
                 file_count += 1
         except Exception as e:
             logger.error(f"Error during export: {e}")
-            # Add error information to the output
             self.formatter.add_error(f"Error during export: {e}")
             
-        # Finalize the document
         output_content = self.formatter.end_document()
         
         return output_content, file_count
@@ -101,7 +97,6 @@ class CodeExporter:
         relative_path = self.file_handler.get_relative_path(file_path)
         content, language = self.file_handler.read_file(file_path)
         
-        # Add the file to the output
         self.formatter.add_file(
             path=str(relative_path),
             content=content,

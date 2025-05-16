@@ -1,5 +1,5 @@
 """
-Utility functions for Code Context Exporter
+Utility functions
 """
 
 from ctxport.utils.path_utils import find_files

@@ -1,5 +1,5 @@
 """
-Markdown formatter for Code Context Exporter
+Markdown formatter
 """
 
 from typing import List, Optional
@@ -40,11 +40,9 @@ class MarkdownFormatter(OutputFormatter):
             content: The content of the file
             language: The language identifier for syntax highlighting (optional)
         """
-        # Add file header with its path
         self.lines.append(f"## {path}")
         self.lines.append("")
         
-        # Add file content in a code block with language for syntax highlighting
         lang_spec = language if language else ""
         self.lines.append(f"```{lang_spec}")
         self.lines.append(content)

@@ -5,7 +5,7 @@ Path utility functions for Code Context Exporter
 import logging
 import os
 from pathlib import Path
-from typing import Generator, List, Set
+from typing import Generator
 
 logger = logging.getLogger(__name__)
 
@@ -57,12 +57,9 @@ def normalize_path(path_str: str) -> Path:
     Returns:
         Normalized Path object
     """
-    # Expand user directory (tilde)
     expanded = os.path.expanduser(path_str)
     
-    # Convert to absolute path
     if not os.path.isabs(expanded):
         expanded = os.path.abspath(expanded)
     
-    # Return as Path object
     return safe_resolve(Path(expanded))

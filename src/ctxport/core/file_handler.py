@@ -1,10 +1,10 @@
 """
-File handling functionality for Code Context Exporter
+File handling functionality
 """
 
 import logging
 from pathlib import Path
-from typing import Dict, Optional, Tuple
+from typing import Optional, Tuple
 
 from ctxport.config import Config
 

@@ -1,5 +1,5 @@
 """
-Core functionality for the Code Context Exporter
+Core functionality
 """
 
 from ctxport.core.exporter import CodeExporter

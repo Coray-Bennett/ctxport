@@ -4,14 +4,10 @@ Export your codebase context to markdown format for use with AI prompts. This to
 
 ## Installation
 
-```bash
-pip install code-context-export
-```
-
-Or install from source:
+install from source:
 
 ```bash
-git clone https://github.com/yourusername/code-context-export.git
+git clone https://github.com/Coray-Bennett/ctxport.git
 cd code-context-export
 pip install .
 ```
@@ -25,7 +21,7 @@ ctxport
 
 ### Export a specific directory:
 ```bash
-ctxport /path/to/your/project
+ctxport <directory>
 ```
 
 ### Save to a file:
@@ -122,15 +118,9 @@ Configuration files use JSON format:
 
 Create a project-specific configuration:
 
-```bash
-ctxport --init-config
-```
+### Separate Ignore Files
 
-This will create a `.ctxport.json` file in the current directory with example settings.
-
-### Backward Compatibility
-
-The tool maintains backward compatibility with the `context.ignore` file format. If a `context.ignore` file exists, its patterns will be merged with configuration ignore patterns.
+The tool also supports a `context.ignore` file format. If a `context.ignore` file exists, its patterns will be merged with configuration ignore patterns.
 
 ## Ignore Patterns
 
@@ -200,11 +190,3 @@ if __name__ == "__main__":
     main()
 ```
 ```
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.

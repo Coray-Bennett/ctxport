@@ -1,5 +1,5 @@
 """
-Base formatter interface for Code Context Exporter
+Base formatter interface
 """
 
 from abc import ABC, abstractmethod

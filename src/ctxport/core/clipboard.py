@@ -1,11 +1,10 @@
 """
-Clipboard management functionality for Code Context Exporter
+Clipboard management functionality
 """
 
 import logging
 import platform
 import subprocess
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +68,6 @@ class ClipboardManager:
         Returns:
             True if successful, False otherwise
         """
-        # Try different clipboard tools in order of preference
         for clipboard_cmd in [
             ['xclip', '-selection', 'clipboard'],
             ['xsel', '--clipboard', '--input'],

@@ -1,5 +1,5 @@
 """
-Code Context Exporter - Export codebase context to markdown for AI prompts
+Code Context Exporter
 """
 
 from ctxport.main import main
