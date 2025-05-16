@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Setup script for Code Context Exporter
+Setup script
 """
 
 import os
