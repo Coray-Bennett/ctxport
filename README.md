@@ -1,4 +1,4 @@
-# Code Context Exporter
+# ctxport: Code Context Exporter
 
 Export your codebase context to markdown format for use with AI prompts. This tool helps you quickly grab relevant code context and either copy it to your clipboard or save it to a file.
 
@@ -8,7 +8,7 @@ install from source:
 
 ```bash
 git clone https://github.com/Coray-Bennett/ctxport.git
-cd code-context-export
+cd ctxport
 pip install .
 ```
 
